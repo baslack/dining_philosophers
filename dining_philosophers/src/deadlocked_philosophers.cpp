@@ -112,7 +112,7 @@ int main(int argc, char **argv)
 Philosopher::Philosopher(\
 	std::string name, \
 	Utensil &left, \
-	Utensil &right): name(name), left(left), right(right)
+	Utensil &right) : name(name), left(left), right(right)
 {
 	ate = 0;
 	talked = 0;
@@ -144,12 +144,12 @@ void Philosopher::talk(void)
 	// std::cout << this->name << " talks a lot." << std::endl;
 }
 
-Utensil::Utensil(void):lock()
+Utensil::Utensil(void) :lock()
 {
 }
 
 Utensil::Utensil(const Utensil &other) : lock()
-{	
+{
 }
 
 Utensil::~Utensil(void)
@@ -180,9 +180,13 @@ void run(Philosopher &phil, Barrier &barrier)
 	barrier.Wait();
 	while (phil.ate < kFULL) {
 		bool hasLeft = false;
-		hasLeft = phil.left.acquire();
+		// takeNHold always returns true, but it blocks, allowing a deadlock to occur
+		hasLeft = phil.left.takeNhold();
+		// need a short timeout to force a deadlock every time, else one thread can grab both
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 		bool hasRight = false;
-		hasRight = phil.right.acquire();
+		hasRight = phil.right.takeNhold();
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 		if (hasLeft && hasRight) {
 			phil.eat();
 			phil.left.release();
@@ -203,7 +207,7 @@ void run(Philosopher &phil, Barrier &barrier)
 			phil.talk();
 		}
 	} // end while
-	// std::cout << phil.name << " sits and smokes his (or her) pipe." << std::endl;
+	  // std::cout << phil.name << " sits and smokes his (or her) pipe." << std::endl;
 	if (!bSuppress) {
 		printf("%s sits and smokes.\n\n", phil.name.c_str());
 	}

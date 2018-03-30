@@ -10,3 +10,21 @@ add_executable(
 )
 
 target_include_directories(dining_philosophers PUBLIC "./include")
+
+add_executable(
+    deadlocked_philosophers 
+        "src/deadlocked_philosophers.cpp"
+		"include/Barrier.hpp"
+		"src/Barrier.cpp"
+)
+
+target_include_directories(deadlocked_philosophers PUBLIC "./include")
+
+add_executable(
+    starving_philosophers
+        "src/starving_philosophers.cpp"
+		"include/Barrier.hpp"
+		"src/Barrier.cpp"
+)
+
+target_include_directories(starving_philosophers PUBLIC "./include")
