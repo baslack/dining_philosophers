@@ -1,7 +1,9 @@
 # dining_philosophers
-# Benjamin A. Slack
-# CS5541, hw5
-# 04/01/2018
+
+Benjamin A. Slack
+CS5541, hw5
+04/01/2018
+benjamin.a.slack@wmich.edu
 
 Summary:
 A C++ 11 implementation of the dining philosopher problem, using thread and mutex classes
