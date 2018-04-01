@@ -77,6 +77,13 @@ int main(int argc, char **argv)
 	args.erase(args.cbegin());
 
 	for (auto iter = args.cbegin(); iter != args.cend(); iter++) {
+		if (*iter == "-h") {
+			std::cout << "Usage: [-h] [-v] [...]\n";
+			exit(EXIT_SUCCESS);
+		}
+	}
+
+	for (auto iter = args.cbegin(); iter != args.cend(); iter++) {
 		if (*iter == "-v") {
 			bSuppress = false;
 			args.erase(iter);
@@ -87,22 +94,22 @@ int main(int argc, char **argv)
 	std::cout << "Starting dinner." << std::endl << std::endl;
 	// set the table
 	std::vector<Utensil> utensils;
-	for (int i = 0; i < args.size(); i++) {
+	for (size_t i = 0; i < args.size(); i++) {
 		utensils.push_back(Utensil());
 	}
 	Barrier bar(args.size());
 	// seat the diners
 	std::vector<Philosopher> diners;
-	for (int i = 0; i < args.size(); i++) {
+	for (size_t i = 0; i < args.size(); i++) {
 		diners.push_back(Philosopher(args[i], utensils[i], utensils[(i + 1) % (args.size())]));
 	}
 	// start the meal
 	std::vector<std::thread> threads;
-	for (int i = 0; i < args.size(); i++) {
+	for (size_t i = 0; i < args.size(); i++) {
 		threads.push_back(std::thread(run, std::ref(diners[i]), std::ref(bar)));
 	}
 	// clean up the table
-	for (int i = 0; i < args.size(); i++) {
+	for (size_t i = 0; i < args.size(); i++) {
 		threads[i].join();
 	}
 	std::cout << "Dinner ends." << std::endl << std::endl;
