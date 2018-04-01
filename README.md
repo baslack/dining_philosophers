@@ -27,4 +27,4 @@ Usage:
 [...] an arbitrary list of philospher names who will participate in the dinner
 
 Make:
-A CMAKE project is provide as well as custom Makefile for simplicities sake.
+A CMAKE project is provide as well as custom Makefile for simplicity's sake.
