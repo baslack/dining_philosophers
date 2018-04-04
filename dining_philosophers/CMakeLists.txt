@@ -28,3 +28,12 @@ add_executable(
 )
 
 target_include_directories(starving_philosophers PUBLIC "./include")
+
+add_executable(
+    semaphore_philosophers
+        "src/semaphore_philosophers.cpp"
+		"include/Barrier.hpp"
+		"src/Barrier.cpp"
+)
+
+target_include_directories(semaphore_philosophers PUBLIC "./include")

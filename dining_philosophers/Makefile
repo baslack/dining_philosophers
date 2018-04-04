@@ -3,7 +3,7 @@ SRCDIR = ./src/
 INCDIR = ./include/
 CXX_FLAGS = -std=c++11 -Wall -I $(INCDIR)
 
-all:  dining deadlocked starving
+all:  dining deadlocked starving semaphore
 
 OBJA = $(SRCDIR)dining_philosophers.cpp $(SRCDIR)Barrier.cpp $(INCDIR)Barrier.hpp
 dining: 
@@ -17,5 +17,9 @@ OBJC = $(SRCDIR)starving_philosophers.cpp $(SRCDIR)Barrier.cpp $(INCDIR)Barrier.
 starving: 
 	g++ $(CXX_FLAGS) -o ./starving_philosophers $(OBJC) $(CXX_LINK)
 
+OBJD = $(SRCDIR)semaphore_philosophers.cpp $(SRCDIR)Barrier.cpp $(INCDIR)Barrier.hpp
+semaphore: 
+	g++ $(CXX_FLAGS) -o ./semaphore_philosophers $(OBJD) $(CXX_LINK)
+
 clean:
-	rm ./dining_philosophers ./deadlocked_philosophers ./starving_philosophers
+	rm ./dining_philosophers ./deadlocked_philosophers ./starving_philosophers ./semaphore_philosophers
